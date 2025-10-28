@@ -212,9 +212,8 @@ y = breast_cancer_train_data['diagnosis']
 pred = pretrained_model.predict(X)
 
 with st.container(key="my_col_container2"):
+    st.header("Model training results section")
     st.write(f"Model accuracy on training data: {np.mean(pred == y):.4f}")
-
-    st.write("model training results section")
     st.write("(on training data only due to lack of test labels)")
     col2_1, col2_2 = st.columns(2)
     with col2_1:
@@ -304,7 +303,7 @@ with st.container(key="prediction_container"):
     
     # Next 10 features (standard error values) in second column
     with col2:
-        st.subheader("Standard Error Features")
+        st.subheader("Std Error Features")
         for i, feature in enumerate(feature_columns[10:20]):
             # Create number input with min/max boundaries and mean as default value
             input_data[feature] = st.number_input(
