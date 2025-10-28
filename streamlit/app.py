@@ -269,7 +269,9 @@ st.markdown(style_string, unsafe_allow_html=True)
 
 
 # Calculate feature boundaries for input validation
+# Extract feature columns (excluding id and diagnosis)
 feature_columns = [col for col in breast_cancer_train_data.columns if col not in ['id', 'diagnosis']]
+# Calculate min, max, and mean values for each feature to set input boundaries and default values
 feature_min_values = breast_cancer_train_data[feature_columns].min()
 feature_max_values = breast_cancer_train_data[feature_columns].max()
 feature_mean_values = breast_cancer_train_data[feature_columns].mean()
@@ -279,15 +281,17 @@ with st.container(key="prediction_container"):
     st.header('Manual Prediction')
     st.write("Enter the values for each feature to get a prediction from the model. (Values ranges are limited to training data ranges)")
     
-    # Create columns for better organization
+    # Create three columns for better organization of input fields
     col1, col2, col3 = st.columns(3)
     
+    # Dictionary to store user input values
     input_data = {}
     
-    # First 10 features in first column
+    # First 10 features (mean values) in first column
     with col1:
         st.subheader("Mean Features")
         for i, feature in enumerate(feature_columns[:10]):
+            # Create number input with min/max boundaries and mean as default value
             input_data[feature] = st.number_input(
                 label=f"{feature.replace('_', ' ').title()} (Min: {feature_min_values[feature]:.4f}, Max: {feature_max_values[feature]:.4f})",
                 min_value=float(feature_min_values[feature]),
@@ -298,10 +302,11 @@ with st.container(key="prediction_container"):
                 key=f"input_{feature}"
             )
     
-    # Next 10 features in second column
+    # Next 10 features (standard error values) in second column
     with col2:
         st.subheader("Standard Error Features")
         for i, feature in enumerate(feature_columns[10:20]):
+            # Create number input with min/max boundaries and mean as default value
             input_data[feature] = st.number_input(
                 label=f"{feature.replace('_', ' ').title()} (Min: {feature_min_values[feature]:.4f}, Max: {feature_max_values[feature]:.4f})",
                 min_value=float(feature_min_values[feature]),
@@ -312,10 +317,11 @@ with st.container(key="prediction_container"):
                 key=f"input_{feature}"
             )
     
-    # Last 10 features in third column
+    # Last 10 features (worst values) in third column
     with col3:
         st.subheader("Worst Features")
         for i, feature in enumerate(feature_columns[20:]):
+            # Create number input with min/max boundaries and mean as default value
             input_data[feature] = st.number_input(
                 label=f"{feature.replace('_', ' ').title()} (Min: {feature_min_values[feature]:.4f}, Max: {feature_max_values[feature]:.4f})",
                 min_value=float(feature_min_values[feature]),
@@ -326,29 +332,31 @@ with st.container(key="prediction_container"):
                 key=f"input_{feature}"
             )
     
-    # Prediction button
+    # Prediction button - triggers prediction when clicked
     if st.button('Make Prediction', key="predict_button"):
-        # Convert input data to DataFrame
+        # Convert input data to DataFrame for model prediction
         input_df = pd.DataFrame([input_data])
         
-        # Make prediction
+        # Make prediction using the pretrained model
         prediction = pretrained_model.predict(input_df)[0]
         prediction_proba = pretrained_model.predict_proba(input_df)[0]
         
         # Display prediction result
         st.subheader('Prediction Result')
         
-        # Create columns for result display
+        # Create two columns for result display
         result_col1, result_col2 = st.columns(2)
         
         with result_col1:
+            # Display prediction with appropriate styling
             if prediction == 'M':
                 st.error(f"Prediction: **Malignant**")
             else:
                 st.success(f"Prediction: **Benign**")
         
         with result_col2:
-            # Display probability
+            # Display prediction probabilities
+            # Handle class order to correctly assign probabilities
             benign_prob = prediction_proba[0] if pretrained_model.classes_[0] == 'B' else prediction_proba[1]
             malignant_prob = prediction_proba[1] if pretrained_model.classes_[1] == 'M' else prediction_proba[0]
             
@@ -356,7 +364,7 @@ with st.container(key="prediction_container"):
             st.write(f"Benign: {benign_prob:.4f} ({benign_prob*100:.2f}%)")
             st.write(f"Malignant: {malignant_prob:.4f} ({malignant_prob*100:.2f}%)")
         
-        # Add a visual gauge for probability
+        # Create a visual gauge for probability visualization
         fig = go.Figure(go.Indicator(
             mode = "gauge+number+delta",
             value = malignant_prob * 100,
@@ -382,19 +390,19 @@ with st.container(key="prediction_container"):
         fig.update_layout(height=300)
         st.plotly_chart(fig, use_container_width=True)
         
-        # Create 3D scatter plot with manual point
+        # Create 3D scatter plot with manual point visualization
         st.subheader('3D Visualization')
         st.write("Your input point (green) compared to training data points")
         
         # Create a copy of training data for visualization
         viz_data = breast_cancer_train_data.copy()
         
-        # Add the manual input point to the data
+        # Add the manual input point to the data with a unique identifier
         manual_point = input_data.copy()
-        manual_point['diagnosis'] = 'Your Input'  # Use a unique identifier
+        manual_point['diagnosis'] = 'Your Input'  # Use a unique identifier for coloring
         viz_data = pd.concat([viz_data, pd.DataFrame([manual_point])], ignore_index=True)
         
-        # Create the 3D plot
+        # Create the 3D scatter plot
         fig_3d = px.scatter_3d(
             viz_data,
             x='radius_mean',
@@ -407,19 +415,19 @@ with st.container(key="prediction_container"):
             hover_data=['diagnosis']
         )
         
-        # Highlight the manual point
+        # Set default marker size for all points
         fig_3d.update_traces(
             selector=dict(mode='markers'),
             marker=dict(size=5)
         )
         
-        # Make the manual point larger and more visible
+        # Make the manual point larger and more visible with black border
         fig_3d.update_traces(
             selector=dict(marker_color='#b6e680'),
             marker=dict(size=12, line=dict(width=2, color='black'))
         )
         
-        # Customize axis titles
+        # Customize axis titles and legend
         fig_3d.update_layout(
             scene=dict(
                 xaxis_title='Radius Mean',
