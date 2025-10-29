@@ -1,0 +1,13 @@
+name: Keep Streamlit Apps Alive
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Runs every 6 hours
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  ping-apps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send request to MyStreamlitApp
+        run: curl -s -o /dev/null -w "%{http_code}\\n" https://kaggle-breast-cancer-competition-hvu5fjkbvrfrlti6dss8oa.streamlit.app/
