@@ -7,7 +7,7 @@ This repository contains the code and resources for my solutions to the Kaggle c
 
 The goal of this competition is to build a machine learning model capable of accurately classifying breast cancer as either benign or malignant based on various features extracted from breast mass images.
 
-## Repository Contents
+## 🗄️ Repository Contents
 
 This repository is organized to provide a clear and understandable structure for the project. You will find the following:
 
@@ -26,7 +26,7 @@ This repository is organized to provide a clear and understandable structure for
 
 * **`README.md`**: This file (the one you are currently reading) provides an overview of the repository and the project.
 
-## Approach and Key Findings
+## 🔑🔍Approach and Key Findings
 
 This repository showcases my approach to tackling the breast cancer detection challenge. Key aspects of the solution might include:
 
@@ -38,7 +38,7 @@ This repository showcases my approach to tackling the breast cancer detection ch
 
 Further details about the specific models used, feature engineering techniques, and evaluation results can be found in the individual notebooks within the `notebooks/` directory.
 
-## How to Use This Repository
+## 📖 How to Use This Repository
 
 1.  **Clone the repository:**
     ```bash
@@ -57,11 +57,11 @@ Further details about the specific models used, feature engineering techniques, 
 
 5.  **Reproduce the submission:** Every solution notebook generates it's own `submission.csv` file which can be uploaded to kaggel.
 
-## Contributions and Improvements
+## 🛠️ Contributions and Improvements
 
 Feel free to explore the code and suggest improvements or report any issues. Contributions are welcome!
 
-## Deployed Application
+## 📈 Deployed Application
 
 This repository includes a deployed Streamlit web application that provides an interactive interface for breast cancer detection using the trained AdaBoost model. The application offers the following features:
 
