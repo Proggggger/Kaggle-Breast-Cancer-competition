@@ -19,7 +19,10 @@ st.set_page_config(
 
 st.title("Breast cancer detection (Adaptive Boosting)")
 st.write("This is a simple web app for breast cancer detection using Adaptive Boosting algorithm. The dataset used is from Kaggle Breast Cancer competition.")
-
+st.write("You can explore the dataset, view model training results, and make manual predictions by entering feature values.")
+st.write("Developed by [Ivan Burmaka](https://github.com/Proggggger)")
+st.write("Explore the complete code and resources in the [GitHub repository](https://github.com/Proggggger/Kaggle-Breast-Cancer-competition), including training algorithms and data preprocessing steps.")
+st.write("Also check out the [Kaggle competition page](https://www.kaggle.com/competitions/breast-cancer-detection/code) for more details.")
 @st.cache_data
 def load_dataset(data_link):
     dataset = pd.read_csv(data_link)
