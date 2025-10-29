@@ -1,6 +1,8 @@
 # Kaggle-Breast-Cancer-competition
 # Breast Cancer Detection Challenge Solutions
 
+🚀 **Try the deployed application:** [Breast Cancer Detection App](https://breast-cancer-detection-app.streamlit.app/)
+
 This repository contains the code and resources for my solutions to the Kaggle competition: [Breast Cancer Detection](https://www.kaggle.com/competitions/breast-cancer-detection/overview).
 
 The goal of this competition is to build a machine learning model capable of accurately classifying breast cancer as either benign or malignant based on various features extracted from breast mass images.
@@ -58,6 +60,25 @@ Further details about the specific models used, feature engineering techniques, 
 ## Contributions and Improvements
 
 Feel free to explore the code and suggest improvements or report any issues. Contributions are welcome!
+
+## Deployed Application
+
+This repository includes a deployed Streamlit web application that provides an interactive interface for breast cancer detection using the trained AdaBoost model. The application offers the following features:
+
+### Key Features:
+- **Data Exploration**: Interactive visualization of the breast cancer dataset with 3D scatter plots
+- **Model Performance**: View confusion matrix and calibration curve to understand model behavior
+- **Manual Prediction**: Input feature values to get real-time predictions from the trained model
+- **Visual Feedback**: Probability gauge and 3D visualization showing where your input falls relative to training data
+
+### How to Use:
+1. Visit the [Breast Cancer Detection App](https://breast-cancer-detection-app.streamlit.app/)
+2. Explore the dataset visualization to understand feature distributions
+3. Review model performance metrics
+4. Enter feature values in the manual prediction section to get a diagnosis prediction
+5. View the 3D visualization to see how your input compares to the training data
+
+The application uses a pre-trained AdaBoost classifier that analyzes 30 different features extracted from breast mass images to classify tumors as either benign or malignant. The model achieves high accuracy on the training data and provides probability estimates for each prediction.
 
 ## Disclaimer
 
